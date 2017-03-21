@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+   <script>
+    (function(){
+      var Size = document.documentElement.clientWidth/20,
+          oHtml = document.getElementsByTagName('html')[0];
+      oHtml.style.fontSize= Size +"px";
+    })()
+  </script>
+<style>
+ /*@-webkit-keyframes rotateB {
+   0%{transform:rotateZ(180deg);}
+    100%{transform:rotateZ(360deg);}
+  }
+  @-webkit-keyframes rotateA {
+    
+    0%{transform:rotateZ(180deg);}
+
+    100%{transform:rotateZ(270deg);}
+
+  }*/
+  .loading{margin:100px auto; width: 8em; height: 8em; position: relative;}
+
+  .loading .progress{position: absolute; width: 6em; height:6em; background-color: white; border-radius: 50%; left: 1em; top: 1em; text-align: center;}
+  .loading .progress .moveText {width:100%;-webkit-transform:translate(-0.5rem);-webkit-transition:-webkit-transform 1s linear;}
+  .progress .moveText p {font: 1rem 'Microsoft YaHei';}
+  .ChartName {}
+  .ChartPer {color:#666666;}
+  .left,.right{width: 4em;height: 8em;overflow: hidden;position: relative; float: left;}
+  .left{ border-radius: 8em 0 0 8em;}
+  .right{ border-radius: 0 8em 8em 0;}
+  .leftRadius,.leftRadius2,.leftRadius3,.leftRadius4 {position:absolute; display:block; width: 4em;height: 8em;border-radius: 8em 0 0 8em;transform-origin:right center;}
+  .rightRadius,.rightRadius2,.rightRadius3,.rightRadius4 {position:absolute; display:block; width: 4em;height: 8em;border-radius: 0 8em 8em 0;transform-origin:left center;}
+  .PowderBlue {background-color: #B0E0E6;}
+  .Aqua {background-color: #00FFFF;}
+  .Brown {background-color: #A52A2A;}
+  .DarkGoldenRod {background-color: #B8860B;}
+  .DeepSkyBlue {background-color: #00BFFF;}
+  
+
+  }
+</style>
+</head>
+<body>
+<div class="loading">
+ <div class="left" id="left">
+   <div class="leftRadius PowderBlue"></div>
+ </div>
+ <div class="right" id="right">
+   <div class="rightRadius PowderBlue"></div>
+ </div>
+ <div class="progress">
+  <div class="moveText" id="moveText">
+    <p class="ChartName">WeiBo</p>
+    <p class="ChartPer">90%</p>
+  </div>
+</div>
+</div>
+
+<div class="loading">
+ <div class="left" id="left2">
+   <div class="leftRadius2 DarkGoldenRod"></div>
+ </div>
+ <div class="right" id="right2">
+   <div class="rightRadius2 DarkGoldenRod"></div>
+ </div>
+ <div class="progress">
+  <div class="moveText" id="moveText2">
+    <p class="ChartName">Tiweer</p>
+    <p class="ChartPer">30%</p>
+  </div>
+</div>
+</div>
+
+<div class="loading">
+ <div class="left" id="left3">
+   <div class="leftRadius3 Brown"></div>
+ </div>
+ <div class="right" id="right3">
+   <div class="rightRadius3 Brown"></div>
+ </div>
+ <div class="progress">
+  <div class="moveText" id="moveText3">
+    <p class="ChartName">Facebook</p>
+    <p class="ChartPer">60%</p>
+  </div>
+</div>
+</div>
+
+<div class="loading">
+ <div class="left" id="left4">
+   <div class="leftRadius4 DeepSkyBlue"></div>
+ </div>
+ <div class="right" id="right4">
+   <div class="rightRadius4 DeepSkyBlue"></div>
+ </div>
+ <div class="progress">
+  <div class="moveText" id="moveText4">
+    <p class="ChartName">WeiXin</p>
+    <p class="ChartPer">50%</p>
+  </div>
+</div>
+</div>
+<script>
+	window.onload = function(){
+		var $left = document.getElementById('left'),
+      $TextCon = document.getElementById('moveText'),
+       $left2 = document.getElementById('left2'),
+      $TextCon2 = document.getElementById('moveText2'),
+       $left3 = document.getElementById('left3'),
+      $TextCon3 = document.getElementById('moveText3'),
+       $left4 = document.getElementById('left4'),
+      $TextCon4 = document.getElementById('moveText4'),
+			per = 0,
+			time = 1,
+		  flag = 0,
+      ruleA = '',
+      ruleB = '';
+
+      var FanChart = function($left,leftClass,rightClass,$TextCon,ArgPer,ArgTime){
+        var per = ArgPer || 1,
+            time = ArgTime || 1;
+            sheet = document.createElement('style');
+        sheet.type = 'text/css';
+        sheet.innerHTML = '*{}';
+        document.getElementsByTagName('head')[0].appendChild(sheet);
+        var sheetLength = document.styleSheets.length;
+        var cssRule = document.styleSheets[sheetLength - 1];
+        if(per > 0.5){
+          ruleA = '@-webkit-keyframes rotateA'+ flag +' {0%{transform:rotateZ(180deg);}100%{transform:rotateZ('+ per*360 +'deg);}}';
+          ruleB = '@-webkit-keyframes rotateB' + flag + ' {0%{transform:rotateZ(180deg);}100%{transform:rotateZ(360deg);}}';
+          cssRule.insertRule(ruleB,1);
+          cssRule.insertRule(''+ rightClass + '{-webkit-animation:rotateB'+ flag +' '+ time*0.5 +'s linear  forwards;}',2);
+          cssRule.insertRule(ruleA,3);
+          cssRule.insertRule(''+ leftClass +'{-webkit-animation:rotateA'+ flag +' '+ (per - 0.5)*time +'s linear '+ time*0.5 +'s  both;}',4);
+        }else{
+          $left.style.visibility = 'hidden';
+          ruleB = '@-webkit-keyframes rotateB'+ flag +' {0%{transform:rotateZ(180deg);}100%{transform:rotateZ('+ (180 + per*360) + 'deg);}}';
+          cssRule.insertRule(ruleB,1);
+          cssRule.insertRule(''+ rightClass +'{-webkit-animation:rotateB'+ flag +' '+ time*0.5 +'s linear  forwards;}',2);
+        }
+        $TextCon.style.webkitTransform = 'translate(0)';
+        flag ++;
+      }
+      FanChart($left,'.leftRadius','.rightRadius',$TextCon,0.9,1);
+      FanChart($left2,'.leftRadius2','.rightRadius2',$TextCon2,0.3,1);
+      FanChart($left3,'.leftRadius3','.rightRadius3',$TextCon3,0.6,1);
+      FanChart($left4,'.leftRadius4','.rightRadius4',$TextCon4,0.56,1);
+
+	}
+</script>
+</body>
+</html>
