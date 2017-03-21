@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<style>
+		#con {
+			
+		}
+		.list {
+			height:3rem;
+			width: 1rem;
+		}
+	</style>
+	<script>
+	  (function(){
+	    var Size = document.documentElement.clientWidth/6.4,
+	        oHtml = document.getElementsByTagName('html')[0];
+	    oHtml.style.fontSize= Size +"px";
+	  })()
+	</script>
+	<style>
+		#sectionCon {
+			width: 6rem;
+			margin: 0 auto;
+			position: relative;
+			overflow: hidden;
+		}
+		#sectionCon .scroll {
+			width: 6rem;
+			height: 70rem;
+			position: absolute;
+			top:0;
+			left: 0;
+		}
+		#sectionCon .scroll section {
+			width:6rem;
+			
+
+		}
+		#sectionCon .scroll section img {
+			width: 100%;
+		}
+		#sectionCon .scroll section:nth-child(1) {
+			background-color:blue;
+		}
+		#sectionCon .scroll section:nth-child(2) {
+			background-color: red;
+		}
+		#sectionCon .scroll section:nth-child(3) {
+			background-color: #eee;
+		}
+		#sectionCon .scroll section:nth-child(4) {
+			background-color: blue;
+		}
+		#sectionCon .scroll section:nth-child(5) {
+			background-color: red;
+		}
+		.icon {
+			width: 2rem;
+			height: 0.5rem;
+			background-color: rgba(0,0,0,0.5);
+			position: absolute;
+			bottom: 0.1rem;
+			left: 50%;
+			margin-left: -1rem;
+			z-index: 10;
+			border-radius: 0.2rem;
+			-webkit-display:flex;
+			display:flex;
+			flex-direction:row;
+			align-items:center;
+			justify-content:space-between;
+		}
+		.icon span {
+			display: inline-block;
+			
+			width: 0.2rem;
+			height: 0.2rem;
+			border-radius: 0.1rem;
+			background-color: #eeeeee;
+			
+			
+			z-index: 12;
+		}
+		/*.icon span:nth-child(1) {
+			left: 0.1rem;
+		}
+		.icon span:nth-child(2) {
+			left: 0.4rem;
+		}
+		.icon span:nth-child(3) {
+			right: 0.1rem;
+		}*/
+		.icon .active {
+			background-color: red
+		}
+	</style>
+</head>
+<body>
+<section id="sectionCon">
+	<section class="scroll" id="scroll">
+		<!-- <section>3</section> -->
+		<section class="list">
+			<img src="../images/pages/1.jpg" alt="">
+		</section>
+		<section class="list">
+			<img src="../images/pages/2.jpg" alt="">
+		</section>
+		<section class="list">
+			<img src="../images/pages/3.jpg" alt="">
+		</section>
+		<section class="list">
+			<img src="../images/pages/4.jpg" alt="">
+		</section>
+		<section class="list">
+			<img src="../images/pages/5.jpg" alt="">
+		</section>
+		<!-- <section>1</section> -->
+	</section>
+	<section class="icon" id="icon">
+		<span class="active"></span><span></span><span></span><span></span><span></span>
+	</section>
+</section>
+<script src="../js/pl/touchScroll.js"></script>
+<script src="../js/pages/zepto.js"></script>
+<script>
+window.onload = function () {
+	var dom = document.getElementById('sectionCon');
+	var scroll = document.getElementById('scroll');
+	var heightImg = $('.list img').height();
+	dom.style.height = heightImg + 'px';
+	$('.list').height(heightImg);
+	//scroll.style.height = heightImg + 'px';
+	var domScroll = new TouchScroll({
+		$con:dom,autoScroll:true,direction:'vertical',autoTime:5000,scrollSpeed:300,
+		callBack:function(opt){
+			$('#icon').children('span').removeClass('active');
+			$('#icon').children('span').eq(opt).addClass('active');
+		}
+	});
+	domScroll.init();
+}
+
+</script>
+</body>
+</html>
